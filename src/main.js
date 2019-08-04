@@ -4,8 +4,16 @@ import App from './App.vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+// 导入请求模块;
+import axios from 'axios'
+
 // 导入路由
 import router from './router/index.js'
+
+// 导入公用样式;
+import '@/styles/index.less'
+// 进行全局挂载;
+Vue.prototype.$http = axios
 
 // 是否开启产品级别提示;(不开启)
 Vue.config.productionTip = false

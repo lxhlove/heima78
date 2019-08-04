@@ -2,10 +2,18 @@
 // 导入包;
 import VueRouter from 'vue-router'
 import Vue from 'vue'
+
+// 导入登录组件;
+import Login from '@/views/login'
+
 Vue.use(VueRouter)
 const router = new VueRouter({
-  // []:填写对象,路由规则,路径对应的组件
-  routes: []
+  // []:填写对象,配置路由规则,路径对应的组件
+  routes: [
+    // 跳转路由:$router.push('/login')或$router.push({name:'login'});
+    // component:对应登录组件;
+    { path: '/login', name: 'login', component: Login }
+  ]
 })
 
 // 导出配置项
