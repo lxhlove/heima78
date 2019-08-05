@@ -13,6 +13,8 @@ import Welcome from '@/views/welcome'
 import Article from '@/views/article'
 // 导入404页面的组件;
 import Notfound from '@/views/404'
+// 导入本地存储模块;
+import store from '@/store'
 
 Vue.use(VueRouter)
 const router = new VueRouter({
@@ -47,6 +49,15 @@ const router = new VueRouter({
     // 定义404页面的路由规则;
     { path: '*', name: '404', component: Notfound }
   ]
+})
+// 创建全局前置导航守卫;(设置跳转路由时的访问权限)
+router.beforeEach((to, from, next) => {
+  // 1.如果为登录路由则放行;
+  if (to.path === '/login') return next()
+  // 2.获取用户信息,如果没有,则将其拦截到登录页面;
+  if (!store.getUser().token) return next('/login')
+  // 3.获取用户信息,如果存在,则放行;
+  next()
 })
 
 // 导出配置项

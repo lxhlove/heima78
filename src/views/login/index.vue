@@ -37,6 +37,8 @@
 </template>
 
 <script>
+// 导入封装好的存储模块;
+import store from '@/store'
 export default {
   data () {
     // 声明自定义校验函数;
@@ -91,6 +93,9 @@ export default {
         //   console.log(res.data)
           // 若请求成功,则直接跳转到首页;
           // 首页的路由为'/';
+
+          // 登录成功后存储用户信息;
+          store.setUser(res.data.data)
           this.$router.push('/')
         })
         // 请求失败;
