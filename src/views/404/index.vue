@@ -1,0 +1,17 @@
+<template>
+  <div class='container'>404</div>
+</template>
+
+<script>
+export default {}
+</script>
+
+<style scoped lang='less'>
+    .container{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        // cover:完全铺满该容器;
+        background: url(../../assets/images/404.png) no-repeat center /cover;
+    }
+</style>

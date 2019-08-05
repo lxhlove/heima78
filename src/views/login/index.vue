@@ -53,8 +53,8 @@ export default {
       // 表单的数据对象;
       loginForm: {
         // 字段参考后端提供的接口文档;
-        mobile: '',
-        code: ''
+        mobile: '13888888888',
+        code: '246810'
       },
       // 校验规则对象;
       loginRules: {
