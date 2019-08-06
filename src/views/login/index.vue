@@ -80,29 +80,41 @@ export default {
     login () {
       // 对整体表单进行校验;
       // 1.获取el-form对象;
-      this.$refs.loginForm.validate((valid) => {
+      this.$refs.loginForm.validate(async (valid) => {
         // 判断校验是否成功;
         if (valid) {
           console.log('success')
-        }
-        // 2.校验成功则发起登录请求;
-        this.$http.post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.loginForm).then(res => {
-          // res:响应对象;
-          // res.data:返回的数据;
-          // 判断请求是否成功;
-        //   console.log(res.data)
-          // 若请求成功,则直接跳转到首页;
-          // 首页的路由为'/';
+          // // 2.校验成功则发起登录请求;
+          // this.$http.post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.loginForm).then(res => {
+          //   // res:响应对象;
+          //   // res.data:返回的数据;
+          //   // 判断请求是否成功;
+          // //   console.log(res.data)
+          //   // 若请求成功,则直接跳转到首页;
+          //   // 首页的路由为'/';
 
-          // 登录成功后存储用户信息;
-          store.setUser(res.data.data)
-          this.$router.push('/')
-        })
-        // 请求失败;
-          .catch(() => {
-            // 提示用户名或密码错误;
-            this.$message.error('手机号或密码错误')
-          })
+          //   // 登录成功后存储用户信息;
+          //   store.setUser(res.data.data)
+          //   this.$router.push('/')
+          // })
+          // // 请求失败;
+          //   .catch(() => {
+          //   // 提示用户名或密码错误;
+          //     this.$message.error('手机号或密码错误')
+          //   })
+
+          // post请求的返回值为promise对象;
+          // await的返回值为.then的结果;
+          // 解决await使用时出现的错误(捕获异常)   try{可能会报错的代码} catch(e){错误处理};
+          try {
+            const { data: { data } } = await this.$http.post('authorizations', this.loginForm)
+            store.setUser(data)
+            // 跳转到首页;
+            this.$router.push('/')
+          } catch (e) {
+            this.$message.error('手机号或验证码错误')
+          }
+        }
       })
     }
   }
