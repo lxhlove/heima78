@@ -64,13 +64,18 @@
         <!-- 下拉菜单 -->
         <el-dropdown class="my-dropdown">
           <span class="el-dropdown-link">
-            <img src="../../assets/images/avatar.jpg" alt />
-            下拉菜单
+            <!-- 将从本地存储中获取的数据信息动态绑定到用户头像和姓名 -->
+
+            <img :src="photo" alt />
+            {{name}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="el-icon-setting">个人设置</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-unlock">退出登录</el-dropdown-item>
+            <!--添加动态绑定 -->
+            <!-- 注意:click绑定的必须是原生的DOM,绑定在组件上将会被认为是自定义事件 -->
+              <!-- click想要绑定在解析后的DOM上必须使用事件修饰符native:(绑定原生事件) -->
+            <el-dropdown-item icon="el-icon-setting" @click.native='setting()'>个人设置</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-unlock" @click.native='logout()'>退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -83,18 +88,41 @@
 </template>
 
 <script>
+// 导入本地存储模块,
+import store from '@/store'
 export default {
   data () {
     // 定义显示与隐藏的数据
     return {
-      isCollapse: false
+      isCollapse: false,
+      // 声明用户姓名:
+      name: '',
+      photo: ''
     }
+  },
+
+  // 获取用户信息;
+  created () {
+    // 从本地存储中获取数据;
+    const user = store.getUser()
+    this.name = user.name
+    this.photo = user.photo
   },
   // 侧边栏进行切换;
   methods: {
     // 侧边栏进行切换(收起与展开);
     toggleMune () {
       this.isCollapse = !this.isCollapse
+    },
+    setting () {
+      // 跳转到个人设置界面;
+      this.$router.push('/setting')
+    },
+    logout () {
+      // 清除本地存储中保存的用户信息;
+      store.clearUser()
+      // 跳转回登录页;
+      this.$router.push('/login')
     }
   }
 }
