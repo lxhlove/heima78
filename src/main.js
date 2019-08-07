@@ -13,6 +13,11 @@ import router from './router/index.js'
 
 // 导入公用样式;
 import '@/styles/index.less'
+
+// 导入插槽插件;
+import myPlugin from '@/components'
+// 安装插件;
+Vue.use(myPlugin)
 // 进行全局挂载;
 Vue.prototype.$http = axios
 

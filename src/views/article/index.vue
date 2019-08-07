@@ -1,20 +1,79 @@
 <template>
-    <div class="container">article</div>
+  <div class="container">
+    <!-- 筛选区域 -->
+    <!-- 1.定义面板 -->
+    <el-card>
+      <div slot="header" class="clearfix">
+       <my-bread>粉丝管理</my-bread>
+      </div>
+      <!-- 定义表单项 -->
+      <el-form label-width="80px" size="small">
+        <el-form-item label="状态">
+          <!-- 绑定选项必须参考后台接口 -->
+          <el-radio-group v-model="reqParams.status">
+            <el-radio :label="null">全部</el-radio>
+            <el-radio :label="0">草稿</el-radio>
+            <el-radio :label="1">待审核</el-radio>
+            <el-radio :label="2">审核通过</el-radio>
+            <el-radio :label="3">审核失败</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <!-- 定义下拉菜单 -->
+        <el-form-item label="频道">
+          <el-select v-model=" reqParams.channel_id" placeholder="请选择">
+            <el-option
+              v-for="item in channelOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="日期">
+          <el-date-picker
+            v-model="dateArr"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary">筛选</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+    <!-- 结果区域 -->
+    <my-test>
+      <!-- 为插槽插入内容 -->
+      <!-- slot-scope="data" 定义插槽传递过来的所有自定义属性和值的集合数据 (对象):msg:{值}-->
+      <template slot="content" slot-scope="scope">content 获取组件内部数据:{{scope.msg}} </template>
+      <!-- <div v-slot:content='scope'>content 获取组件内部数据:{{scope.msg}}</div>  简洁写法-->
+      <div slot="footer">footer</div>
+    </my-test>
+  </div>
 </template>
 
 <script>
+
 export default {
-  // 钩子函数;在Vue实例创建完成的时候执行
-  created () {
-    // 测试发送请求;
-    this.$http.get('http://ttapi.research.itcast.cn/mp/v1_0/articles').then(res => {
-      // 测试请求是否成功;
-      console.log(res.data)
-    })
+
+  data () {
+    return {
+      // 搜集筛选出来的表单数据;
+      // reqParams:请求参数;
+      reqParams: {
+        status: null,
+        channel_id: null
+      },
+      // 频道下拉菜单选项数据;
+      channelOptions: [{ label: 'js', value: '10000' }],
+      // 日期数据;
+      dateArr: []
+    }
   }
 }
 </script>
 
 <style scoped lang='less'>
-
 </style>
