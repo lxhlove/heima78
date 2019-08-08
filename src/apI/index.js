@@ -3,8 +3,20 @@
 import axios from 'axios'
 // 导入token信息;
 import store from '@/store'
+// 导入json-bigint
+import JSONBIG from 'json-bigint'
 // 2.进行配置;
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
+axios.defaults.transformResponse = [(data) => {
+  // 对data进行转换;(return 的值为转换后的结果)
+  // data:原始的json字符
+  // data在删除接口返回的是null,使用JSONBIG转换null会报错;
+  try {
+    return JSONBIG.parse(data)
+  } catch (e) {
+    return data
+  }
+}]
 
 // axios.defaults.headers = {
 //   Authorization: `Bearer ${store.getUser().token}`

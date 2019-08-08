@@ -6,11 +6,14 @@
 // 3.函数有形参(形参为Vue对象);
 import MyTest from '@/components/my-test'
 import MyBread from '@/components/my-bread'
+// 导入my-channel组件;
+import MyChannel from '@/components/my-channel'
 export default {
   install (vue) {
     // vue.use:使用插件; Vue就是插件的调用者;
     // 将组建进行全局注册;
     vue.component(MyBread.name, MyBread)
     vue.component(MyTest.name, MyTest)
+    vue.component(MyChannel.name, MyChannel)
   }
 }
