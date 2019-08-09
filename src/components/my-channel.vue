@@ -32,7 +32,7 @@ export default {
   methods: {
     fn (val) {
       // 后端不支持空字符问题
-      if (val === '') val = null
+      if (val === '') { val = null }
 
       // 更新父组件的频道列表;
       this.$emit('input', val)

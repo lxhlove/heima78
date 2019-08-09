@@ -24,6 +24,7 @@
           <!-- clearable清空的结果为值变为空字符 -->
           <!-- 使用自己封装的组件 -->
           <!--将数据传递给子组件 :value='reqParams.channel_id' -->
+          <!-- @input='reqParams.channel_id=数据' -->
           <my-channel v-model="reqParams.channel_id"></my-channel>
 
         </el-form-item>
